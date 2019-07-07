@@ -1,0 +1,132 @@
+/*
+文件名：1_1_3_2.cpp
+作者：汤善康
+日期：2019年7月7日
+*/
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+
+typedef int Status;
+typedef char BTelemtype;
+typedef struct BInode
+{
+	BTelemtype data;
+	struct BInode *lchild, *rchild;
+}BT, *Node;
+//先序遍历创建二叉树
+void create(Node &bt)
+{
+	BTelemtype ch;
+	scanf(" %c", &ch);
+	if (ch =='#')//‘#’代表为空
+	{
+		bt = NULL;
+	}
+	else
+	{
+		bt = (Node)malloc(sizeof(BT));//申请结点空间
+		if (!bt)
+		{
+			printf("overlow");
+		}
+		else
+		{
+			bt->data = ch;
+			create(bt->lchild);//递归调用函数创建左子树结点
+			create(bt->rchild);//递归调用函数创建右子树结点
+		}
+	}
+
+
+
+	
+}
+//访问输出结点
+void visit(Node &L)
+{
+	printf("%6c", L->data);
+}
+//先序遍历输出
+void PreOrder(Node &L)
+{
+	if (L==NULL)//该结点为空
+		return;
+	else
+	{
+		visit(L);//访问打印该节点
+		PreOrder(L->lchild);//对结点的左子树结点递归调用函数
+		PreOrder(L->rchild);//对结点的右子树结点递归调用函数
+		
+	}
+}
+//中序遍历输出
+void InOrder(Node &L)
+{
+	if (L == NULL)
+	{
+		return;
+	}
+	else
+	{
+		InOrder(L->lchild);
+		visit(L);
+		InOrder(L->rchild);
+
+	}
+}
+//后序遍历输出二叉树
+void PostOrder(Node &L)
+{
+	if (L == NULL)
+		return;
+	else
+	{
+		PostOrder(L->lchild);
+		PostOrder(L->rchild);
+		visit(L);
+	}
+}
+int main()
+{
+	Node L;
+	
+	int a;//欲选择的程序序号
+	printf("******************\n");
+	printf("1.先序遍历创建二叉树\n");
+	printf("2.先序遍历输出二叉树\n");
+	printf("3.中序遍历输出二叉树\n");
+	printf("4.后序遍历输出二叉树\n");
+	printf("*****************\n");
+	while (1)
+	{
+		printf("请输入要选择的程序序号：\n");
+		scanf("%d", &a);
+		switch (a)
+		{
+		case 1:
+		
+			printf("请按先序遍历输入：\n");
+			create(L);
+			break;
+		case 2:
+			printf("先序遍历输出结果为：\n");
+			PreOrder(L);
+			printf("\n");
+			break;
+		case 3:
+			printf("中序遍历输出结果为：\n");
+			InOrder(L);
+			printf("\n");
+			break;
+		case 4:
+			printf("后序遍历输出结果为：\n");
+			PostOrder(L);
+			printf("\n");
+			break;
+		}
+	}
+	
+}
